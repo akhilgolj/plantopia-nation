@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Orders - Plantopia</title>
+    <link rel="icon" href="logo-final.png" type="image/png">
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Font Awesome 4.7.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Remixicon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap 4 JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="active-orders.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="slider.js" defer></script>
+
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <div class="logo-title-container">
+                <a href="index.html">
+                    <img src="images/logo-final.png" alt="LOGO 2 IMAGE" class="logo">
+                </a>
+            </div>
+            <nav class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="about.html#about-us">About Us</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Our Cuisines ▼</a>
+                    <div class="dropdown-content">
+                        <a href="american.html">American</a>
+                        <a href="Indian.html">Indian</a>
+                        <a href="european.html">European</a>
+                        <a href="chinese.html">Chinese</a>
+                        <a href="japanese.html">Japanese</a>
+                        <a href="korean.html">Korean</a>
+                    </div>
+                </div>
+                <a href="tablereserve.html">Reserve Table</a>
+                <a href="source-bib.html">Reference Page</a>
+                <div id="cart-icon" class="cart">🛒
+                    <span id="cart-count" class="cart-item-count">0</span>
+                </div>
+                <div id="user-profile" class="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <div class="user-name-dropbtn">
+                            <img id="user-picture" class="user-picture" src="" alt="Profile Picture" onerror="this.src='images/default-profile.png';">
+                            <span id="user-name"></span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="user-dropdown-content">
+                            <a href="active-orders.html">Your Orders</a>
+                            <a href="#" id="sign-out-link" onclick="signOut()">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="auth-options" class="dropdown">
+                    <a href="#" class="dropbtn">SIGN IN ▼</a>
+                    <div class="dropdown-content">
+
+                        <a href="#" id="guest-signin">Sign in as Guest</a>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- Guest Sign-in Popup -->
+    <div id="guest-popup" class="popup" style="display: none;">
+        <button class="popup-close" id="guest-popup-close">×</button>
+        <div class="popup-content">
+            <h2>Sign in as Guest</h2>
+            <input type="text" id="guest-name" placeholder="Enter your name" required />
+            <button id="guest-submit">Submit</button>
+            <button id="guest-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Welcome Notification Popup -->
+    <div id="welcome-notification" class="notification" style="display: none;">
+        <div class="notification-content">
+            <span id="welcome-message"></span>
+            <button id="close-notification">×</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="order-history-section">
+            <h3>Active Orders</h3>
+            <div id="order-history-container"></div>
+        </section>
+
+        <section id="reservation-history-section">
+            <div id="reservation-history-container"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Veggie University. All Rights Reserved.</p>
+    </footer>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Hamburger menu toggle
+        $(document).ready(function() {
+            $('.hamburger').click(function() {
+                $('.nav-right').toggleClass('active');
+                $(this).find('i').toggleClass('fa-bars fa-times');
+            });
+
+            // Close menu when a link is clicked on mobile
+            $('.nav-right a').click(function() {
+                if ($(window).width() <= 768) {
+                    $('.nav-right').removeClass('active');
+                    $('.hamburger i').removeClass('fa-times').addClass('fa-bars');
+                }
+            });
+
+            // Handle dropdown on mobile to prevent closing the nav
+            $('.dropbtn').click(function(e) {
+                if ($(window).width() <= 768) {
+                    e.preventDefault();
+                    $(this).siblings('.dropdown-content').toggle();
+                }
+            });
+        });
+    </script>
+
+    <div id="cart-slider" class="cart-slider">
+        <div class="cart-header">
+            <h2>SHOPPING CART</h2>
+            <button id="close-cart">×</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        
+        <div id="suggestions-section" style="padding: 20px; border-top: 1px solid #555;">
+            <h3 style="font-size: 22px; margin-bottom: 15px; font-weight: 500;">Try These!</h3>
+            <div id="suggestions-container" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between;">
+                <div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+                    <img src="images/mac-cheese.webp" alt="Mac and Cheese" style="width: 100%; height: 100px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Mac and Cheese</h4>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold;">$10.99</span>
+                            <button class="suggestion-add-btn" data-index="item-101" data-name="Mac and Cheese" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+                    <img src="images/malai-kofta.jpg" alt="Malai Kofta" style="width: 100%; height: 100px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Malai Kofta</h4>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold;">$10.99</span>
+                            <button class="suggestion-add-btn" data-index="item-102" data-name="Malai Kofta" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+                    <img src="images/vegetable-lasagna.jpg" alt="Vegetable Lasagna" style="width: 100%; height: 100px; object-fit: cover;">
+                    <div style="padding: 12px;">
+                        <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Vegetable Lasagna</h4>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold;">$13.99</span>
+                            <button class="suggestion-add-btn" data-index="item-103" data-name="Vegetable Lasagna" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const suggestionItems = [
+                { index: 'item-101', name: 'Mac and Cheese', price: 10.99, image: 'images/mac-cheese.webp' },
+                { index: 'item-102', name: 'Malai Kofta', price: 10.99, image: 'images/malai-kofta.jpg' },
+                { index: 'item-103', name: 'Vegetable Lasagna', price: 13.99, image: 'images/vegetable-lasagna.jpg' }
+            ];
+
+            if (typeof cartData === 'undefined') {
+                cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const suggestionButtons = document.querySelectorAll('.suggestion-add-btn');
+                if (!suggestionButtons.length) {
+                    console.error('No suggestion buttons found in DOM');
+                    return;
+                }
+
+                suggestionButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = button.getAttribute('data-index');
+                        const name = button.getAttribute('data-name');
+                        const suggestion = suggestionItems.find(item => item.index === index);
+                        if (!suggestion) {
+                            console.error('Suggestion not found for index:', index);
+                            return;
+                        }
+
+                        let cartItem = cartData.find(item => item.name === name);
+                        if (!cartItem) {
+                            cartItem = { ...suggestion, quantity: 1 };
+                            cartData.push(cartItem);
+                        } else {
+                            cartItem.quantity++;
+                        }
+
+                        const cartItemsContainer = document.getElementById('cart-items');
+                        if (!cartItemsContainer) {
+                            console.error('Cart items container not found');
+                            return;
+                        }
+
+                        cartItemsContainer.innerHTML = '';
+                        let total = 0;
+                        let totalItems = 0;
+
+                        cartData.forEach(item => {
+                            if (!item.price) return;
+                            const itemElement = document.createElement('div');
+                            itemElement.classList.add('cart-item');
+                            itemElement.innerHTML = `
+                                <img src="${item.image || 'default-image.jpg'}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                <span class="item-name">${item.name}</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus" data-index="${item.index}">-</button>
+                                    <span class="quantity">${item.quantity}</span>
+                                    <button class="quantity-btn plus" data-index="${item.index}">+</button>
+                                </div>
+                                <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                                <button class="delete-btn" data-index="${item.index}"><i class="fas fa-trash-alt"></i></button>
+                            `;
+                            cartItemsContainer.appendChild(itemElement);
+                            total += item.price * item.quantity;
+                            totalItems += item.quantity;
+                        });
+
+                        const cartTotal = document.getElementById('cart-total');
+                        const cartCount = document.getElementById('cart-count');
+                        if (cartTotal) cartTotal.textContent = total.toFixed(2);
+                        if (cartCount) {
+                            cartCount.textContent = totalItems;
+                            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+                        }
+
+                        if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+                        if (typeof updateCartCount === 'function') updateCartCount();
+                        if (typeof saveCartToLocalStorage === 'function') {
+                            saveCartToLocalStorage();
+                        } else {
+                            localStorage.setItem('cartData', JSON.stringify(cartData));
+                        }
+                        if (typeof showNotification === 'function') showNotification(`Added ${suggestion.name} to cart`);
+
+                        attachCartEventListeners();
+                    });
+                });
+
+                function attachCartEventListeners() {
+                    document.querySelectorAll('.quantity-btn').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const index = e.target.getAttribute('data-index');
+                            const cartItem = cartData.find(item => item.index === index);
+                            if (cartItem) {
+                                if (e.target.classList.contains('plus')) {
+                                    cartItem.quantity++;
+                                } else if (e.target.classList.contains('minus')) {
+                                    cartItem.quantity--;
+                                    if (cartItem.quantity <= 0) cartData = cartData.filter(item => item.index !== index);
+                                }
+                                updateCartSliderCustom();
+                                if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+                                if (typeof updateCartCount === 'function') updateCartCount();
+                                if (typeof saveCartToLocalStorage === 'function') saveCartToLocalStorage();
+                                else localStorage.setItem('cartData', JSON.stringify(cartData));
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-btn').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const index = e.target.closest('.delete-btn').getAttribute('data-index');
+                            cartData = cartData.filter(item => item.index !== index);
+                            updateCartSliderCustom();
+                            if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+                            if (typeof updateCartCount === 'function') updateCartCount();
+                            if (typeof saveCartToLocalStorage === 'function') saveCartToLocalStorage();
+                            else localStorage.setItem('cartData', JSON.stringify(cartData));
+                        });
+                    });
+                }
+
+                function updateCartSliderCustom() {
+                    const cartItemsContainer = document.getElementById('cart-items');
+                    if (!cartItemsContainer) return;
+
+                    cartItemsContainer.innerHTML = '';
+                    let total = 0;
+                    let totalItems = 0;
+
+                    cartData.forEach(item => {
+                        if (!item.price) return;
+                        const itemElement = document.createElement('div');
+                        itemElement.classList.add('cart-item');
+                        itemElement.innerHTML = `
+                            <img src="${item.image || 'default-image.jpg'}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            <span class="item-name">${item.name}</span>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus" data-index="${item.index}">-</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn plus" data-index="${item.index}">+</button>
+                            </div>
+                            <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                            <button class="delete-btn" data-index="${item.index}"><i class="fas fa-trash-alt"></i></button>
+                        `;
+                        cartItemsContainer.appendChild(itemElement);
+                        total += item.price * item.quantity;
+                        totalItems += item.quantity;
+                    });
+
+                    const cartTotal = document.getElementById('cart-total');
+                    const cartCount = document.getElementById('cart-count');
+                    if (cartTotal) cartTotal.textContent = total.toFixed(2);
+                    if (cartCount) {
+                        cartCount.textContent = totalItems;
+                        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+                    }
+                }
+            });
+        </script>
+        <div class="cart-footer">
+            <h3>Total: $<span id="cart-total">0.00</span></h3>
+            <a href="checkout.html"><button id="checkout-btn">CHECKOUT</button></a>
+        </div>
+    </div>
+</body>
+</html>
