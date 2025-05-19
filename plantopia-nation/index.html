@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantopia</title>
+    <link rel="icon" href="images/logo-final.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="sugg.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iansui&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="add-to-cart.js" defer></script>
+    <script src="table.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+<body class="landing-background">
+
+      
+      
+    <header>
+        <div class="header-container">
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <div class="logo-title-container">
+                <a href="index.html">
+                  <img src="images/logo-final.png" alt="LOGO 2 IMAGE" class="logo">
+                </a>
+            </div>
+            <nav class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="about.html#about-us">About Us</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Our Cuisines ▼</a>
+                    <div class="dropdown-content">
+                        <a href="american.html">American</a>
+                        <a href="Indian.html">Indian</a>
+                        <a href="european.html">European</a>
+                        <a href="chinese.html">Chinese</a>
+                        <a href="japanese.html">Japanese</a>
+                        <a href="korean.html">Korean</a>
+                    </div>
+                </div>
+                <a href="tablereserve.html">Reserve Table</a>
+                <a href="source-bib.html">Reference Page</a>
+                <div id="cart-icon" class="cart">🛒
+                    <span id="cart-count" class="cart-item-count">0</span>
+                </div>
+                <div id="user-profile" class="user-profile" style="display: none;">
+                    <div class="user-dropdown">
+                        <div class="user-name-dropbtn">
+                            <img id="user-picture" class="user-picture" src="" alt="Profile Picture">
+                            <span id="user-name"></span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="user-dropdown-content">
+                            <a href="active-orders.html">Your Orders</a>
+                            <a href="#" id="sign-out-link" onclick="signOut()">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="auth-options" class="dropdown">
+                    <a href="#" class="dropbtn">SIGN IN ▼</a>
+                    <div class="dropdown-content">
+                       <!-- <div class="g_id_signin"
+                            data-type="standard"
+                            data-size="large"
+                            data-theme="outline"
+                            data-text="sign_in_with"
+                            data-shape="rectangular"
+                            data-logo_alignment="left">
+                        </div> -->
+                        <a href="#" id="guest-signin">Sign in as Guest</a>
+                    </div>
+                </div>
+                <div id="g_id_onload">
+          <!--      <div id="g_id_onload"
+                    data-client_id="393903945324-dkvoequ09ml50t2lbfjhf5rped7sijp4.apps.googleusercontent.com"
+                    data-callback="handleCredentialResponse"
+                    data-auto_prompt="false"
+                    data-ux_mode="popup"
+                    data-login_uri="http://127.0.0.1:5500"> --> 
+                </div> 
+            </nav>
+        </div>
+    </header>
+
+    <!-- Guest Sign-in Popup -->
+    <div id="guest-popup" class="popup" style="display: none;">
+        <button class="popup-close" id="guest-popup-close">×</button>
+        <div class="popup-content">
+            <h2>Sign in as Guest</h2>
+            <input type="text" id="guest-name" placeholder="Enter your name" required />
+            <button id="guest-submit">Submit</button>
+            <button id="guest-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Welcome Notification Popup -->
+    <div id="welcome-notification" class="notification" style="display: none;">
+        <div class="notification-content">
+            <span id="welcome-message"></span>
+            <button id="close-notification">×</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <section>
+            <section class="head">
+
+                </div>
+            </section>
+        </section>
+    </div>
+    <div class="quote-box fade-in">
+        <h3>
+          "Embracing a vegetarian lifestyle is a powerful choice for health, sustainability, and ethical living. Every plant-based meal supports a thriving planet and a compassionate future."
+        </h3>
+      </div>
+      <div class="button-wrapper">
+        <div class="restable-container">
+          <button class="restable" onclick="location.href='tablereserve.html'">Reserve a Table</button>
+        </div>
+      </div>
+
+    <section class="departments" style="margin-top: 50vh;"></section>
+    <h1 style="font-size: 6rem; margin-bottom: 0.5rem; font-family: sans-serif; line-height: 1.2; color: #e0b380; align-items: center; text-align: center; margin-top: -280px;">
+      Our Cuisines
+    </h1>
+        <div class="department-images">
+            <div class="row">
+                <a href="american.html"><img src="images/american-food1.PNG" alt="American Cuisine" class="department-img"></a>
+                <a href="Indian.html"><img src="images/indian-food1.png" alt="Indian Cuisine" class="department-img"></a>
+                <a href="european.html"><img src="images/european-food1.png" alt="European Cuisine" class="department-img"></a>
+            </div>
+            <div class="row">
+                <a href="chinese.html"><img src="images/chinese-food1.png" alt="Chinese Cuisine" class="department-img"></a>
+                <a href="japanese.html"><img src="images/japanese-food1.png" alt="Japanese Cuisine" class="department-img"></a>
+                <a href="korean.html"><img src="images/korean-food1.png" alt="Korean Cuisine" class="department-img"></a>
+            </div>
+        </div>
+    </section>
+
+        <section id="menu-slider">
+        <div class="menu-container">
+          <h1 style="font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+          font-family: sans-serif;
+          line-height: 1.2;
+          color: #fffefe;
+          align-items: center; text-align: center;">Our Specialties</h1>          
+          </div>
+
+            <div class="menu-slider" >
+                <div class="menu-item">
+                    <img src="images/veggie-burger.webp" alt="Menu Item 1" style="width: 350px; height: auto; border-radius: 50px;">
+                    <h3>Veggie Burger</h3>
+                    <p>$12.99</p>
+                </div>
+                <div class="menu-item">
+                    <img src="images/paneer-tikka.jpg" alt="Menu Item 2" style="width: 350px; height: auto; border-radius: 50px;">
+                    <h3>Paneer Tikka</h3>
+                    <p>$9.99</p>
+                </div>
+                <div class="menu-item">
+                    <img src="images/italian-caprese-salad.jpg" alt="Menu Item 3" style="width: 350px; height: auto; border-radius: 50px;">
+                    <h3>Caprese Salad</h3>
+                    <p>$11.99</p>
+                </div>
+                <div class="menu-item">
+                    <img src="images/takoyaki-vegetarian.jpg" alt="Menu Item 4" style="width: 350px; height: auto; border-radius: 50px;">
+                    <h3>Vegetarian Takoyaki</h3>
+                    <p>$8.99</p>
+                </div>
+                <div class="menu-item">
+                    <img src="images/vegetable-lo-mein.jpg" alt="Menu Item 5" style="width: 350px; height: auto; border-radius: 50px;">
+                    <h3>Vegetable Lo Mein</h3>
+                    <p>$11.50</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section id="features">
+       <div class="container">
+          <div class="feature-top">
+            <h1>Savor the Flavor</h1>
+            <p>Craving something tasty? Order online from Plantopia!</p>
+    
+          </div>
+          <div class="feature-container">
+            <div class="featureitem">
+              <span class="material-symbols-outlined">restaurant</span>
+              <h4>Hygienic</h4>
+              <p>At Plantopia, we prepare and serve food in a highly hygienic environment, ensuring cleanliness and safety at every step
+              </p>
+            </div>
+            <div class="featureitem">
+              <span class="material-symbols-outlined">pin_drop</span>
+              <h4>Live Order Tracking</h4>
+              <p>Real-time tracking for every Plantopia order, from kitchen to you
+              </p>
+            </div>
+            <div class="featureitem">
+              <span class="material-symbols-outlined">dinner_dining</span>
+              <h4>Dinner Dining </h4>
+              <p>You can also reserve a table for dinner at Plantopia and enjoy a flavorful journey through our global vegetarian menu 
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <section class="bg-[#111] text-white py-12 px-4">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-8">What our customers say about Plantopia</h2>
+        
+            <div class="relative">
+              <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+        
+                  <!-- Review 1 -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">A lovely dining experience with beautifully crafted dishes...<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Chloé D. – France <span class="font-bold">FR</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 2 -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">Plantopia surprised me with bold flavors and colorful dishes...<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Thabo N. – South Africa <span class="font-bold">ZA</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 3: Japanese -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">The sushi rolls at Plantopia were fresh and creative. Loved the wasabi twist!<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Hana Y. – Japan <span class="font-bold">JP</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 4: American -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">Great vibe, excellent service, and a vegetarian burger that blew me away!<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">David L. – USA <span class="font-bold">US</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 5: British -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">A cozy, clean place with amazing global dishes. The staff were friendly.<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Emma W. – UK <span class="font-bold">GB</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 6: Indian -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">The curry was rich, aromatic, and perfectly spiced. Reminded me of home!<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Ravi M. – India <span class="font-bold">IN</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 7: Korean -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">I loved the kimchi bibimbap. So flavorful and fresh!<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Jiwoo K. – Korea <span class="font-bold">KR</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                  <!-- Review 8: European -->
+                  <div class="swiper-slide bg-[#1a1a1a] p-6 rounded-3xl shadow-md flex flex-col items-center text-center">
+                    <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                    <p class="text-sm mb-3">The Mediterranean platter was divine. Olives, hummus, and warm pita!<br><a href="#" class="text-green-400">Read more</a></p>
+                    <div class="w-10 h-10 bg-gray-600 rounded-full mb-2 flex items-center justify-center">👤</div>
+                    <div class="font-semibold">Luca R. – Italy <span class="font-bold">IT</span></div>
+                    <div class="text-xs text-gray-400">April 13</div>
+                  </div>
+        
+                </div>
+        
+                <!-- Pagination -->
+                <div class="swiper-pagination mt-6"></div>
+              </div>
+        
+              <!-- Custom Nav Buttons -->
+              <div class="absolute top-1/2 left-0 transform -translate-y-1/2 z-10">
+                <div class="swiper-button-prev"></div>
+              </div>
+              <div class="absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <style>
+        /* Custom navigation button styles */
+        .swiper-button-prev,
+        .swiper-button-next {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background-color: rgba(75, 75, 75, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          outline: none;
+          border: none;
+          cursor: pointer;
+        }
+        
+        /* Hover effects */
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+          background-color: rgba(100, 100, 100, 0.9);
+          transform: scale(1.05);
+        }
+        
+        /* Arrow icons */
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+          font-family: "swiper-icons";
+          font-size: 16px !important; /* Override Swiper's default size */
+          font-weight: bold;
+        }
+        
+        /* Position adjustments */
+        .swiper-button-prev {
+          left: 10px;
+        }
+        
+        .swiper-button-next {
+          right: 10px;
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 991px) {
+          .swiper-button-prev,
+          .swiper-button-next {
+            width: 32px;
+            height: 32px;
+          }
+          
+          .swiper-button-prev::after,
+          .swiper-button-next::after {
+            font-size: 14px !important;
+          }
+        }
+        
+        @media screen and (max-width: 767px) {
+          .swiper-button-prev,
+          .swiper-button-next {
+            width: 28px;
+            height: 28px;
+          }
+          
+          .swiper-button-prev::after,
+          .swiper-button-next::after {
+            font-size: 12px !important;
+          }
+          
+          .swiper-button-prev {
+            left: 5px;
+          }
+          
+          .swiper-button-next {
+            right: 5px;
+          }
+        }
+        
+        @media screen and (max-width: 480px) {
+          .swiper-button-prev,
+          .swiper-button-next {
+            width: 24px;
+            height: 24px;
+          }
+        }
+        </style>
+        
+        <script>
+          window.addEventListener('load', function () {
+            new Swiper(".mySwiper", {
+              slidesPerView: 1,
+              spaceBetween: 20,
+              loop: true,
+              pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+              },
+              navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              },
+              breakpoints: {
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              },
+            });
+          });
+        </script>
+          
+          
+            
+
+    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+    <div class="elfsight-app-fe128860-06e7-4d22-a07f-190a3e4015da" data-elfsight-app-lazy></div>
+
+    <footer style="background-color: #0d0d0d; color: #f5f5f5; padding: 50px 20px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; border-top: 2px solid #4CD964; font-family: 'Quicksand', sans-serif; position: relative;">
+      <!-- Left Section: Logo and Description -->
+      <div style="flex: 1; min-width: 250px; margin-bottom: 20px; text-align: center;">
+      <img src="images/logo-final.png" alt="Plantopia Logo" style="width: 120px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;">
+      <p style="font-size: 14px; line-height: 1.8; margin: 0; max-width: 300px; color: #d1d1d1; margin: 0 auto;">
+      Discover the world of vegetarian cuisine at Plantopia. Where taste meets sustainability and health.
+      </p>
+      </div>
+
+      <!-- Center Section: Newsletter Subscription -->
+      <div style="flex: 1; min-width: 250px; text-align: center; margin-bottom: 20px;">
+      <h4 style="font-size: 18px; margin-bottom: 15px; color: #4CD964; font-weight: 600;">Stay Updated</h4>
+      <p style="font-size: 14px; color: #d1d1d1; margin-bottom: 20px;">Subscribe to our newsletter for the latest updates and offers.</p>
+      <form id="newsletter-form" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <input type="email" id="newsletter-email" placeholder="Enter your email" style="width: 80%; padding: 10px; border: 1px solid #10561c; border-radius: 4px; font-size: 14px; background-color: #1a1a1a; color: #f5f5f5;" required>
+      <button type="submit" style="background-color: #10561c; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px;">Subscribe</button>
+      </form>
+      </div>
+
+      <!-- Right Section: Contact Info and Social Media -->
+      <div style="flex: 1; min-width: 250px; text-align: center; margin-bottom: 20px;">
+      <h4 style="font-size: 18px; margin-bottom: 15px; color: #4CD964; font-weight: 600;">Contact Us</h4>
+      <p style="font-size: 14px; margin: 0; line-height: 1.8; color: #d1d1d1;">📞 +1 (800) 123-4567</p>
+      <p style="font-size: 14px; margin: 0; line-height: 1.8; color: #d1d1d1;">✉️ support@plantopia.com</p>
+      <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px;">
+      <a href="#" style="color: #d1d1d1; font-size: 18px; transition: color 0.3s;" onmouseover="this.style.color='#4CD964'" onmouseout="this.style.color='#d1d1d1'"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" style="color: #d1d1d1; font-size: 18px; transition: color 0.3s;" onmouseover="this.style.color='#4CD964'" onmouseout="this.style.color='#d1d1d1'"><i class="fab fa-twitter"></i></a>
+      <a href="#" style="color: #d1d1d1; font-size: 18px; transition: color 0.3s;" onmouseover="this.style.color='#4CD964'" onmouseout="this.style.color='#d1d1d1'"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="color: #d1d1d1; font-size: 18px; transition: color 0.3s;" onmouseover="this.style.color='#4CD964'" onmouseout="this.style.color='#d1d1d1'"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      </div>
+
+      <!-- Bottom Section: Copyright and Back to Top -->
+      <div style="width: 100%; text-align: center; margin-top: 20px; border-top: 1px solid #4CD964; padding-top: 10px; font-size: 12px; color: #d1d1d1; position: relative;">
+      <p>© 2023 Plantopia. All rights reserved.</p>
+      <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" style="position: absolute; right: 20px; top: -60px; background-color: rgba(58, 159, 80, 0.3;); color: #fff; border: none; padding: 15px; border-radius: 1000px; cursor: pointer; font-size: 20px; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='scale(1.2)'; this.style.boxShadow='0 6px 12px rgba(0, 0, 0, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)'">↑</button>      </div>
+    </footer>
+
+    <!-- Notification Popup -->
+    <div id="subscribe-notification" style="display: none; position: fixed; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; font-family: 'Quicksand', sans-serif;">
+      <button onclick="document.getElementById('subscribe-notification').style.display='none'" style="position: absolute; top: 5px; right: 5px; background: none; border: none; color: white; font-size: 16px; cursor: pointer;">×</button>
+      <p>Thank you for subscribing to our newsletter!</p>
+    </div>
+
+    <script>
+      document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      document.getElementById('subscribe-notification').style.display = 'block';
+      setTimeout(() => {
+      document.getElementById('subscribe-notification').style.display = 'none';
+      }, 5000); // Auto-hide after 5 seconds
+      document.getElementById('newsletter-email').value = ''; // Clear the email input field
+      });
+    </script>
+    <div id="cart-slider" class="cart-slider">
+      <div class="cart-header">
+          <h2>SHOPPING CART</h2>
+          <button id="close-cart">×</button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      
+      <!-- Add the suggestions section here -->
+      <!-- 1. Add this HTML inside your cart slider, right before the cart-footer div -->
+
+      <div id="suggestions-section" style="padding: 20px; border-top: 1px solid #555;">
+        <h3 style="font-size: 22px; margin-bottom: 15px; font-weight: 500;">Try These!</h3>
+        <div id="suggestions-container" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between;">
+<!-- Suggestion item 1 -->
+<div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+  <img src="images/mac-cheese.webp" alt="Mac and Cheese" style="width: 100%; height: 100px; object-fit: cover;">
+  <div style="padding: 12px;">
+      <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Mac and Cheese</h4>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: bold;">$10.99</span>
+          <button class="suggestion-add-btn" data-index="item-101" data-name="Mac and Cheese" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+      </div>
+  </div>
+</div>
+
+<!-- Suggestion item 2 -->
+<div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+  <img src="images/malai-kofta.jpg" alt="Malai Kofta" style="width: 100%; height: 100px; object-fit: cover;">
+  <div style="padding: 12px;">
+      <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Malai Kofta</h4>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: bold;">$10.99</span>
+          <button class="suggestion-add-btn" data-index="item-102" data-name="Malai Kofta" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+      </div>
+  </div>
+</div>
+
+<!-- Suggestion item 3 -->
+<div class="suggestion-item" style="width: calc(30% - 8px); background-color: #4a4a4a; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 10px;">
+  <img src="images/vegetable-lasagna.jpg" alt="Vegetable Lasagna" style="width: 100%; height: 100px; object-fit: cover;">
+  <div style="padding: 12px;">
+      <h4 style="font-size: 14px; margin-bottom: 8px; font-weight: 500;">Vegetable Lasagna</h4>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: bold;">$13.99</span>
+          <button class="suggestion-add-btn" data-index="item-103" data-name="Vegetable Lasagna" style="width: 28px; height: 28px; background-color: #4CD964; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+// Define suggestion items
+const suggestionItems = [
+    { index: 'item-101', name: 'Mac and Cheese', price: 10.99, image: 'images/mac-cheese.webp' },
+    { index: 'item-102', name: 'Malai Kofta', price: 10.99, image: 'images/malai-kofta.jpg' },
+    { index: 'item-103', name: 'Vegetable Lasagna', price: 13.99, image: 'images/vegetable-lasagna.jpg' }
+];
+
+// Ensure cartData is initialized
+if (typeof cartData === 'undefined') {
+    cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const suggestionButtons = document.querySelectorAll('.suggestion-add-btn');
+    if (!suggestionButtons.length) {
+        console.error('No suggestion buttons found in DOM');
+        return;
+    }
+
+    suggestionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const index = button.getAttribute('data-index');
+            const name = button.getAttribute('data-name');
+            const suggestion = suggestionItems.find(item => item.index === index);
+            if (!suggestion) {
+                console.error('Suggestion not found for index:', index);
+                return;
+            }
+
+            console.log('Adding item:', name, 'with index:', index, 'to cartData:', cartData);
+
+            // Check for existing item by name to handle duplicates across pages
+            let cartItem = cartData.find(item => item.name === name);
+            if (!cartItem) {
+                cartItem = { ...suggestion, quantity: 1 };
+                cartData.push(cartItem);
+                console.log('New item added to cartData:', cartItem);
+            } else {
+                cartItem.quantity++;
+                console.log('Incremented quantity for existing item:', cartItem);
+            }
+
+            // Update cart slider using the specified format
+            const cartItemsContainer = document.getElementById('cart-items');
+            if (!cartItemsContainer) {
+                console.error('Cart items container not found');
+                return;
+            }
+
+            cartItemsContainer.innerHTML = ''; // Clear existing items
+            let total = 0;
+            let totalItems = 0;
+
+            cartData.forEach(item => {
+                if (!item.price) return;
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <img src="${item.image || 'default-image.jpg'}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                    <span class="item-name">${item.name}</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" data-index="${item.index}">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn plus" data-index="${item.index}">+</button>
+                    </div>
+                    <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="delete-btn" data-index="${item.index}"><i class="fas fa-trash-alt"></i></button>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+                total += item.price * item.quantity;
+                totalItems += item.quantity;
+            });
+
+            // Update total and cart count
+            const cartTotal = document.getElementById('cart-total');
+            const cartCount = document.getElementById('cart-count');
+            if (cartTotal) cartTotal.textContent = total.toFixed(2);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+
+            // Call existing update functions from add-to-cart.js with fallback
+            if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+            else console.error('updateCheckoutPage is not defined');
+            if (typeof updateCartCount === 'function') updateCartCount();
+            else console.error('updateCartCount is not defined');
+            if (typeof saveCartToLocalStorage === 'function') {
+                saveCartToLocalStorage();
+                console.log('Cart saved to localStorage:', cartData);
+            } else {
+                console.error('saveCartToLocalStorage is not defined, using fallback');
+                localStorage.setItem('cartData', JSON.stringify(cartData));
+            }
+            if (typeof showNotification === 'function') showNotification(`Added ${suggestion.name} to cart`);
+
+            // Attach event listeners to quantity and delete buttons
+            attachCartEventListeners();
+        });
+    });
+
+// Function to attach event listeners to cart items
+function attachCartEventListeners() {
+    document.querySelectorAll('.quantity-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.getAttribute('data-index');
+            const cartItem = cartData.find(item => item.index === index);
+            if (cartItem) {
+                if (e.target.classList.contains('plus')) {
+                    cartItem.quantity++;
+                } else if (e.target.classList.contains('minus')) {
+                    cartItem.quantity--;
+                    if (cartItem.quantity <= 0) cartData = cartData.filter(item => item.index !== index);
+                }
+                updateCartSliderCustom();
+                if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+                if (typeof updateCartCount === 'function') updateCartCount();
+                if (typeof saveCartToLocalStorage === 'function') saveCartToLocalStorage();
+                else localStorage.setItem('cartData', JSON.stringify(cartData));
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.closest('.delete-btn').getAttribute('data-index');
+            cartData = cartData.filter(item => item.index !== index);
+            updateCartSliderCustom();
+            if (typeof updateCheckoutPage === 'function') updateCheckoutPage();
+            if (typeof updateCartCount === 'function') updateCartCount();
+            if (typeof saveCartToLocalStorage === 'function') saveCartToLocalStorage();
+            else localStorage.setItem('cartData', JSON.stringify(cartData));
+        });
+    });
+}
+
+// Custom updateCartSlider to match the specified format
+function updateCartSliderCustom() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    if (!cartItemsContainer) return;
+
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    let totalItems = 0;
+
+    cartData.forEach(item => {
+        if (!item.price) return;
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        itemElement.innerHTML = `
+            <img src="${item.image || 'default-image.jpg'}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+            <span class="item-name">${item.name}</span>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus" data-index="${item.index}">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn plus" data-index="${item.index}">+</button>
+            </div>
+            <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+            <button class="delete-btn" data-index="${item.index}"><i class="fas fa-trash-alt"></i></button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+        total += item.price * item.quantity;
+        totalItems += item.quantity;
+    });
+
+    const cartTotal = document.getElementById('cart-total');
+    const cartCount = document.getElementById('cart-count');
+    if (cartTotal) cartTotal.textContent = total.toFixed(2);
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
+}
+});
+</script>
+
+      
+      <div class="cart-footer">
+          <h3>Total: $<span id="cart-total">0.00</span></h3>
+          <a href="checkout.html"><button id="checkout-btn">CHECKOUT</button></a>
+      </div>
+  </div>
+</body>
+</html>
