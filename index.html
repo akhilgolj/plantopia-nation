@@ -34,7 +34,37 @@
 </head>
 <body class="landing-background">
 
-      
+      <script>
+          $('.menu-slider').slick({
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  infinite: true,      // Enables revolving/looping
+  arrows: false,       // Remove arrows if not wanted
+  dots: false,         // Optional: remove dots
+  autoplay: true,      // Optional: for auto-revolving
+  autoplaySpeed: 3000, // Optional: speed in ms
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+      </script>
       
     <header>
         <div class="header-container">
