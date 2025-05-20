@@ -2948,3 +2948,22 @@ button{
   /* Remove any horizontal overflow */
   overflow-x: hidden;
 }
+
+.menu-slider, .slick-slider, .slick-list, .slick-track {
+  overflow: visible !important;
+}
+.menu-slider {
+  overflow-x: hidden !important;
+}
+
+.menu-slider .slick-slide img {
+  width: 180px;      /* Adjust as needed for your design */
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%; /* For round images */
+  display: block;
+  margin: 0 auto;
+}
+.menu-slider .slick-slide {
+  text-align: center;
+}
