@@ -7,17 +7,15 @@
     <link rel="icon" href="logo-final.png" type="image/png">
     <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Font Awesome 4.7.0 -->
+    <!-- Font Awesome 4.7.0 & 5.15.4 for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="o.css">
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Remixicon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Google Sign-In -->
@@ -30,11 +28,32 @@
     <script src="active-orders.js" defer></script>
     <script src="auth.js" defer></script>
     <style>
-    /* Progress Bar Styles */
+    /* Progress Bar Styles for Order Card */
+    .order-card {
+        background: #232323;
+        border-radius: 16px;
+        max-width: 600px;
+        margin: 40px auto 0 auto;
+        padding: 28px 30px 32px 30px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+        border: 1px solid #252525;
+        text-align: center;
+        position: relative;
+    }
+    .order-card .order-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 24px;
+    }
+    .order-card .order-title a {
+        color: #2196f3;
+        text-decoration: none;
+    }
     .order-progress-bar-wrapper {
         width: 100%;
-        max-width: 600px;
-        margin: 32px auto 24px auto;
+        max-width: 480px;
+        margin: 0 auto 0 auto;
         position: relative;
     }
     .order-progress-bar-track {
@@ -91,6 +110,21 @@
         color: #eee;
         text-align: center;
     }
+    .order-arrow {
+        margin: 18px auto 0 auto;
+        color: #4CD964;
+        font-size: 32px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: bounce 1.2s infinite alternate;
+    }
+    @keyframes bounce {
+        0% { transform: translateY(0);}
+        100% { transform: translateY(8px);}
+    }
     </style>
 </head>
 <body>
@@ -115,7 +149,6 @@
                 </div>
                 <a href="tablereserve.html">RESERVE TABLE</a>
                 <a href="source-bib.html">REFERENCE PAGE</a>
-                
                 <div id="user-profile" class="user-profile" style="display: none;">
                     <div class="user-dropdown">
                         <div class="user-name-dropbtn">
@@ -149,30 +182,33 @@
     <div class="container">
         <section id="order-history-section">
             <h3>Active Orders</h3>
-            
-            <!-- Animated Progress Bar Demo Block (does not interfere with your JS) -->
-            <div class="order-progress-bar-wrapper">
-                <div class="order-progress-bar-track">
-                    <div class="order-progress-bar-fill" id="orderProgressBarFill"></div>
-                </div>
-                <div class="order-progress-steps">
-                    <div class="order-progress-step" id="step1"><i class="fa fa-check"></i></div>
-                    <div class="order-progress-step" id="step2"><i class="fa fa-bell"></i></div>
-                    <div class="order-progress-step" id="step3"><i class="fas fa-box-open"></i></div>
-                    <div class="order-progress-step" id="step4"><i class="fa fa-check"></i></div>
-                </div>
-                <div class="order-progress-labels">
-                    <span>Order<br>Placed</span>
-                    <span>In the<br>Kitchen</span>
-                    <span>Wrapping<br>It Up</span>
-                    <span>Order<br>Ready</span>
+            <div id="order-history-container">
+                <!-- Example Order Card with Animated Progress Bar -->
+                <div class="order-card">
+                    <div class="order-title">
+                        ORDER <a href="#">#ORD-605973</a>
+                    </div>
+                    <div class="order-progress-bar-wrapper">
+                        <div class="order-progress-bar-track">
+                            <div class="order-progress-bar-fill" id="orderProgressBarFill"></div>
+                        </div>
+                        <div class="order-progress-steps">
+                            <div class="order-progress-step" id="step1"><i class="fa fa-check"></i></div>
+                            <div class="order-progress-step" id="step2"><i class="fa fa-bell"></i></div>
+                            <div class="order-progress-step" id="step3"><i class="fas fa-box-open"></i></div>
+                            <div class="order-progress-step" id="step4"><i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="order-progress-labels">
+                            <span>Order<br>Placed</span>
+                            <span>In the<br>Kitchen</span>
+                            <span>Wrapping<br>It Up</span>
+                            <span>Order<br>Ready</span>
+                        </div>
+                    </div>
+                    <div class="order-arrow"><i class="fa fa-chevron-down"></i></div>
                 </div>
             </div>
-            <!-- End Progress Bar Demo Block -->
-
-            <div id="order-history-container"></div>
         </section>
-
         <section id="reservation-history-section">
             <div id="reservation-history-container"></div>
         </section>
@@ -181,11 +217,10 @@
     <footer>
         <p>© 2025 Veggie University. All Rights Reserved.</p>
     </footer>
-
     <div id="notification" class="notification"></div>
 
     <script>
-    // Animated Progress Bar (does not interfere with your dynamic JS)
+    // Animated Progress Bar for the order card
     (function() {
         const totalSteps = 4;
         let currentStep = 1;
