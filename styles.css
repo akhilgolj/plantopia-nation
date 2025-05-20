@@ -2915,3 +2915,7 @@ button{
     padding: 5px 5px;
     border-radius: 2px;
 }
+
+.slick-prev, .slick-next {
+  display: none !important;
+}
