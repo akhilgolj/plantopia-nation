@@ -7,28 +7,124 @@
     <link rel="icon" href="logo-final.png" type="image/png">
     <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Font Awesome 4.7.0 -->
+    <!-- Font Awesome 4.7.0 & 5.15.4 for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="o.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Ubuntu:wght@400;700&family=Karla:wght@400;700&display=swap" rel="stylesheet">
     <!-- Remixicon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- Google Sign-In -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Bootstrap 4 JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="active-orders.js" defer></script>
-    <script src="auth.js" defer></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="o.css">
+    <style>
+        /* Progress Bar Styles */
+        .order-progress-card {
+            background: #262626;
+            border-radius: 12px;
+            padding: 32px 24px 24px 24px;
+            max-width: 700px;
+            margin: 32px auto 40px auto;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+            border: 1px solid #222;
+            position: relative;
+        }
+        .order-progress-title {
+            font-size: 20px;
+            margin-bottom: 18px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        .order-progress-title .order-id {
+            color: #2196f3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .order-progress-bar {
+            position: relative;
+            margin: 0 auto 0 auto;
+            width: 94%;
+            max-width: 600px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .progress-bar-track {
+            position: absolute;
+            top: 50%;
+            left: 7.5%;
+            width: 85%;
+            height: 8px;
+            background: #444;
+            border-radius: 6px;
+            transform: translateY(-50%);
+            z-index: 1;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #4CD964 70%, #3ac569 100%);
+            border-radius: 6px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress-step-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #232323;
+            border: 4px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ddd;
+            font-size: 22px;
+            transition: border-color 0.4s, background 0.4s, color 0.4s;
+        }
+        .progress-step.active .progress-step-circle,
+        .progress-step.completed .progress-step-circle {
+            border-color: #4CD964;
+            background: #4CD964;
+            color: #fff;
+        }
+        .order-progress-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 18px 3% 0 3%;
+        }
+        .progress-step-label {
+            font-size: 17px;
+            color: #f5f5f5;
+            font-family: 'Quicksand', 'Ubuntu', sans-serif;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.2;
+            width: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .progress-step-label .fa, .progress-step-label .fas {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+        .order-progress-labels .progress-step-label.active,
+        .order-progress-labels .progress-step-label.completed {
+            color: #4CD964;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -52,7 +148,6 @@
                 </div>
                 <a href="tablereserve.html">RESERVE TABLE</a>
                 <a href="source-bib.html">REFERENCE PAGE</a>
-                
                 <div id="user-profile" class="user-profile" style="display: none;">
                     <div class="user-dropdown">
                         <div class="user-name-dropbtn">
@@ -83,23 +178,99 @@
         </div>
     </header>
 
-       <div class="container">
+    <div class="container">
         <section id="order-history-section">
             <h3>Active Orders</h3>
-            <div id="order-history-container"></div>
+            <div id="order-history-container">
+                <!-- Progress Bar Card Start -->
+                <div class="order-progress-card">
+                    <div class="order-progress-title">
+                        ORDER <a class="order-id" href="#">#ORD-605973</a>
+                    </div>
+                    <div class="order-progress-bar">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressBarFill"></div>
+                        </div>
+                        <div class="progress-step" data-step="1">
+                            <div class="progress-step-circle"><i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="progress-step-circle"><i class="fa fa-bell"></i></div>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="progress-step-circle"><i class="fas fa-box-open"></i></div>
+                        </div>
+                        <div class="progress-step" data-step="4">
+                            <div class="progress-step-circle"><i class="fa fa-check"></i></div>
+                        </div>
+                    </div>
+                    <div class="order-progress-labels">
+                        <div class="progress-step-label" data-label="1">
+                            <i class="fa fa-check"></i>
+                            Order<br>Placed
+                        </div>
+                        <div class="progress-step-label" data-label="2">
+                            <i class="fa fa-bell"></i>
+                            In the<br>Kitchen
+                        </div>
+                        <div class="progress-step-label" data-label="3">
+                            <i class="fas fa-box-open"></i>
+                            Wrapping<br>It Up
+                        </div>
+                        <div class="progress-step-label" data-label="4">
+                            <i class="fa fa-check"></i>
+                            Order<br>Ready
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress Bar Card End -->
+            </div>
         </section>
-
         <section id="reservation-history-section">
-            
             <div id="reservation-history-container"></div>
         </section>
     </div>
-    </script>
 
     <footer>
         <p>© 2025 Veggie University. All Rights Reserved.</p>
     </footer>
-
     <div id="notification" class="notification"></div>
+
+    <script>
+        // Progress Bar Animation
+        const totalSteps = 4;
+        let currentStep = 1;
+
+        function setOrderProgress(step) {
+            const fillPercent = ((step - 1) / (totalSteps - 1)) * 100;
+            const fillBar = document.getElementById('progressBarFill');
+            fillBar.style.width = fillPercent + '%';
+
+            // Update step circles
+            document.querySelectorAll('.progress-step').forEach((el, idx) => {
+                el.classList.remove('completed', 'active');
+                if (idx < step - 1) el.classList.add('completed');
+                if (idx === step - 1) el.classList.add('active');
+            });
+
+            // Update labels
+            document.querySelectorAll('.progress-step-label').forEach((el, idx) => {
+                el.classList.remove('completed', 'active');
+                if (idx < step - 1) el.classList.add('completed');
+                if (idx === step - 1) el.classList.add('active');
+            });
+        }
+
+        // Initial render
+        setOrderProgress(currentStep);
+
+        // Animate progress bar to completion
+        setInterval(() => {
+            if (currentStep < 4) {
+                currentStep++;
+                setOrderProgress(currentStep);
+            }
+        }, 1500);
+    </script>
 </body>
 </html>
