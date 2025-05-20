@@ -149,27 +149,28 @@
     <div class="container">
         <section id="order-history-section">
             <h3>Active Orders</h3>
-            <div id="order-history-container">
-                <!-- Progress Bar Card Start -->
-                <div class="order-progress-bar-wrapper">
-                    <div class="order-progress-bar-track">
-                        <div class="order-progress-bar-fill" id="orderProgressBarFill"></div>
-                    </div>
-                    <div class="order-progress-steps">
-                        <div class="order-progress-step" id="step1"><i class="fa fa-check"></i></div>
-                        <div class="order-progress-step" id="step2"><i class="fa fa-bell"></i></div>
-                        <div class="order-progress-step" id="step3"><i class="fas fa-box-open"></i></div>
-                        <div class="order-progress-step" id="step4"><i class="fa fa-check"></i></div>
-                    </div>
-                    <div class="order-progress-labels">
-                        <span>Order<br>Placed</span>
-                        <span>In the<br>Kitchen</span>
-                        <span>Wrapping<br>It Up</span>
-                        <span>Order<br>Ready</span>
-                    </div>
+            
+            <!-- Animated Progress Bar Demo Block (does not interfere with your JS) -->
+            <div class="order-progress-bar-wrapper">
+                <div class="order-progress-bar-track">
+                    <div class="order-progress-bar-fill" id="orderProgressBarFill"></div>
                 </div>
-                <!-- Progress Bar Card End -->
+                <div class="order-progress-steps">
+                    <div class="order-progress-step" id="step1"><i class="fa fa-check"></i></div>
+                    <div class="order-progress-step" id="step2"><i class="fa fa-bell"></i></div>
+                    <div class="order-progress-step" id="step3"><i class="fas fa-box-open"></i></div>
+                    <div class="order-progress-step" id="step4"><i class="fa fa-check"></i></div>
+                </div>
+                <div class="order-progress-labels">
+                    <span>Order<br>Placed</span>
+                    <span>In the<br>Kitchen</span>
+                    <span>Wrapping<br>It Up</span>
+                    <span>Order<br>Ready</span>
+                </div>
             </div>
+            <!-- End Progress Bar Demo Block -->
+
+            <div id="order-history-container"></div>
         </section>
 
         <section id="reservation-history-section">
@@ -184,7 +185,7 @@
     <div id="notification" class="notification"></div>
 
     <script>
-    // Animated Progress Bar
+    // Animated Progress Bar (does not interfere with your dynamic JS)
     (function() {
         const totalSteps = 4;
         let currentStep = 1;
