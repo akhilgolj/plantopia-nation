@@ -162,8 +162,8 @@ body {
     }
     
     .restable-container {
-        margin: -40px auto;
-        margin-bottom: 60px;
+        margin: -60px auto;
+        margin-bottom: 80px;
     }
     
     .restable-container::after {
